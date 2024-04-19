@@ -2,12 +2,13 @@
   "config": {
     "error": {
       "no_servers": "Пожалуйста, выберите хотя бы один сервер",
-      "cant_login": "Ошибка, проверьте имя пользователя и пароль",
-      "cant_connect": "Не получается подключиться к шлюзу",
-      "wrong_model": "Модель шлюза не поддерживается",
-      "wrong_token": "Неверный Mi Home токен",
-      "wrong_telnet": "Неверная команда для открытия Telnet",
-      "verify": "Перейдите по verify url"
+      "cant_login": "Не удаётся войти в систему, проверьте имя пользователя и пароль",
+      "cant_connect": "Не удаётся подключиться к шлюзу",
+      "no_key": "Для неподдерживаемой версии прошивки шлюза требуется ключ",
+      "wrong_model": "Неподдерживаемая модель шлюза",
+      "wrong_token": "Неверный токен Mi Home",
+      "wrong_telnet": "Неверная команда для открытия telnet",
+      "verify": "Нажмите для проверки URL"
     },
     "step": {
       "user": {
@@ -17,8 +18,8 @@
         }
       },
       "cloud": {
-        "title": "Добавить Mi Cloud аккаунт",
-        "description": "Выбирайте только те серверы, на которых у вас есть устройства{verify}",
+        "title": "Добавить аккаунт Mi Cloud",
+        "description": "Выбирайте только те серверы, где у вас есть устройства {verify}",
         "data": {
           "username": "Email / Mi Account ID",
           "password": "Пароль",
@@ -26,9 +27,9 @@
         }
       },
       "token": {
-        "description": "Вы можете получить Mi Home токен автоматически с помощью [облачной интеграции](https://github.com/AlexxIT/XiaomiGateway3#obtain-mi-home-device-token) или [вручную](https://github.com/Maxmudjon/com.xiaomi-miio/blob/master/docs/obtain_token.md).",
+        "description": "Вы можете получить токен Mi Home автоматически с помощью [облачной интеграции](https://github.com/AlexxIT/XiaomiGateway3#obtain-mi-home-device-token) или [вручную](https://github.com/Maxmudjon/com.xiaomi-miio/blob/master/docs/obtain_token.md).",
         "data": {
-          "host": "IP-адрес",
+          "host": "Хост",
           "token": "Токен",
           "key": "Ключ"
         }
@@ -38,22 +39,22 @@
   "options": {
     "step": {
       "cloud": {
-        "title": "Информация о устройствах MiCloud",
+        "title": "Информация об устройствах MiCloud",
         "data": {
           "did": "Устройство"
         },
         "description": "{device_info}"
       },
       "user": {
-        "title": "Настройка шлюза",
+        "title": "Конфигурация шлюза",
         "data": {
-          "host": "IP-адрес",
+          "host": "Хост",
           "token": "Токен",
           "key": "Ключ",
           "telnet_cmd": "Команда для открытия Telnet",
-          "ble": "Поддержка Bluetooth устройств",
-          "stats": "Добавить сенсоры статистики",
-          "debug": "Логи отладки (debug)"
+          "ble": "Поддержка устройств Bluetooth",
+          "stats": "Добавить датчики статистики",
+          "debug": "Журналы отладки"
         }
       }
     }
@@ -91,9 +92,9 @@
             "enabled": "Включено",
             "disabled": "Отключено",
             "unknown": "Неизвестно",
-            "ok": "OK",
+            "ok": "ОК",
             "error": "ОШИБКА",
-            "permit_join": "Готов к подключению",
+            "permit_join": "Готово к присоединению",
             "stop_join": "Сопряжение остановлено",
             "cancel": "Отмена",
             "key_secure": "Отправить сетевой ключ (безопасный)",
