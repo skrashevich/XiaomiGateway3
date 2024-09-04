@@ -8,7 +8,7 @@ from zigpy.zcl.foundation import (
     ZCLCommandDef,
     ZCLHeader,
 )
-from zigpy.zcl.foundation import GeneralCommand
+from zigpy.zcl.foundation import GeneralCommand, DataType
 from zigpy.zdo import ZDO
 from zigpy.zdo.types import (
     ZDOCmd,
@@ -266,13 +266,17 @@ def xiaomi_deserialize(data: bytes) -> dict | None:
 
 
 def get_type_id(cluster_id: int, attr_id: int) -> int:
-    attr = XCluster(cluster_id).attributes[attr_id]
-    return next(k for k, v in DATA_TYPES.items() if issubclass(attr.type, v[1]))
+    attr_type = XCluster(cluster_id).attributes[attr_id].type
+    return next(
+        dtype.type_id for dtype in DataType if issubclass(attr_type, dtype.python_type)
+    )
 
 
 def attr_encode(type_id: int, value: int) -> bytes:
-    cls = DATA_TYPES[type_id][1]
-    return cls(value).serialize()
+    type_class = next(
+        dtype for dtype in DataType if dtype.type_id == type_id
+    ).python_type
+    return type_class(value).serialize()
 
 
 def zcl_on_off(nwk: str, ep: int, value: bool) -> list:

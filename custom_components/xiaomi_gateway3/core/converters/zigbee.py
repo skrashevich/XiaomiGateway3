@@ -28,7 +28,6 @@ from .silabs import *
 if TYPE_CHECKING:
     from ..device import XDevice
 
-assert DATA_TYPES
 TYPE_BOOL = 0x10  # t.Bool
 TYPE_UINT8 = 0x20  # t.uint8_t
 TYPE_UINT32 = 0x23  # t.uint32_t
