@@ -1641,11 +1641,12 @@ DEVICES += [{
     18051: ["Xiaomi", "Occupancy Sensor", "XMOSB01XS", "xiaomi.sensor_occupy.03"],
     "spec": [
         # main sensors
-        BoolConv("occupancy", "binary_sensor", mi="2.p.1078"),#Tested
-        BaseConv("illuminance", "sensor", mi="2.p.1005"),#Tested
+        BoolConv("occupancy", "binary_sensor", mi="2.p.1078"),
+        BaseConv("illuminance", "sensor", mi="2.p.1005"),
         # other sensors
         BaseConv("battery", "sensor", mi="3.p.1003", entity=ENTITY_LAZY),
-
+        BaseConv("has_someone_duration", "sensor", mi="2.p.1081", entity=ENTITY_DISABLED),
+        BaseConv("no_one_duration", "sensor", mi="2.p.1082", entity=ENTITY_DISABLED),
     ],
 }, {
     # https://github.com/AlexxIT/XiaomiGateway3/pull/1118
@@ -1790,21 +1791,15 @@ DEVICES += [{
     # https://home.miot-spec.com/spec/lcrmcr.lock.cb2207
     11450: ["CRMCR", "intelligent glass door lock", "lcrmcr.lock.cb2207"],
     "spec": [
-        # ok sensors
-        BaseConv("action", "sensor"), # state changes when below actions are triggered, like wireless button
+        BaseConv("action", "sensor"),  # state changes when below actions are triggered, like wireless button
         ConstConv("action", mi="3.e.1020", value="lock_event"),
         ConstConv("action", mi="3.e.1007", value="exception_occurred"),
         ConstConv("action", mi="5.e.1001", value="low_battery"), 
-        BaseConv("last_lock_action", "sensor", mi="3.e.1020.p.1"), # seems no use, sensor always "0"
-        MapConv("last_method", "sensor", mi="3.e.1020.p.2", map={
-            1: "ble", 2: "password", 3: "fingerprint", 4: "nfc", 5: "otp", 6: "indoor", 7: "remoter"
-        }),
-        MathConv("last_user_id", "sensor", mi="3.e.1020.p.3", min=0, max=65534), # blocked sensor revert to "65535"
-        MapConv("last_error", "sensor", mi="3.e.1007.p.5", map={
-            1: "wrong_password", 2: "wrong_fingerprint", 3: "worng_nfc", 4: "battery_low"
-        }),
+        BaseConv("last_lock_action", "sensor", mi="3.e.1020.p.1"),  # seems no use, sensor always "0"
+        MapConv("last_method", "sensor", mi="3.e.1020.p.2", map={1: "ble", 2: "password", 3: "fingerprint", 4: "nfc", 5: "otp", 6: "indoor", 7: "remoter"}),
+        MathConv("last_user_id", "sensor", mi="3.e.1020.p.3", min=0, max=65534),  # blocked sensor revert to "65535"
+        MapConv("last_error", "sensor", mi="3.e.1007.p.5", map={1: "wrong_password", 2: "wrong_fingerprint", 3: "worng_nfc", 4: "battery_low"}),
         BaseConv("battery", "sensor", mi="5.p.1003"),
-
     ],
     # "ttl": "25h"
 }, {
@@ -2701,6 +2696,7 @@ DEVICES += [{
     ],
 }, {
     10789: ["Zxgs", "Mesh Two Color Scene Light", "zxgs.light.bdcl01"],
+    16108: ["WLG", "Smart Light", "wlg.light.wy0a01"],
     "spec": [
         BaseConv("light", "light", mi="2.p.1"),
         BrightnessConv("brightness", mi="2.p.2", max=100),
@@ -3479,6 +3475,28 @@ DEVICES += [{
         BaseConv("child_lock", "switch", mi="7.p.7", entity=ENTITY_DISABLED),
         MapConv("rocker_switch", "select", mi="7.p.8", map={0: "Self-resetting Mode", 1: "Flip Mode", 2: "Sync Mode"}, entity=ENTITY_DISABLED),
     ]
+}, {
+    16854: ["ZNSN", "Mesh Six-Key Oled Wall Switch", "znsn.switch.oled6"],
+    "spec": [
+        BaseConv("channel_1", "switch", mi="2.p.1"),
+        BaseConv("channel_2", "switch", mi="3.p.1"),
+        BaseConv("channel_3", "switch", mi="4.p.1"),
+        BaseConv("channel_4", "switch", mi="5.p.1"),
+        BaseConv("channel_5", "switch", mi="13.p.1"),
+        BaseConv("channel_6", "switch", mi="14.p.1"),
+        MapConv("mode_1", "select", mi="2.p.6", map={0: "Normal", 1: "Linkage", 2: "Atom"}),  # config
+        MapConv("mode_2", "select", mi="3.p.4", map={0: "Normal", 1: "Linkage", 2: "Atom"}),  # config
+        MapConv("mode_3", "select", mi="4.p.4", map={0: "Normal", 1: "Linkage", 2: "Atom"}),  # config
+        MapConv("mode_4", "select", mi="5.p.4", map={0: "Normal", 1: "Linkage", 2: "Atom"}),  # config
+        MapConv("mode_5", "select", mi="13.p.2", map={0: "Scene", 1: "Wireless"}),  # config
+        MapConv("mode_6", "select", mi="14.p.2", map={0: "Scene", 1: "Wireless"}),  # config
+        MapConv("power_on_state_1", "select", mi="2.p.5", map={0: "Default", 1: "Off", 2: "On"}),  # config
+        MapConv("power_on_state_2", "select", mi="3.p.3", map={0: "Default", 1: "Off", 2: "On"}),  # config
+        MapConv("power_on_state_3", "select", mi="4.p.3", map={0: "Default", 1: "Off", 2: "On"}),  # config
+        MapConv("power_on_state_4", "select", mi="5.p.3", map={0: "Default", 1: "Off", 2: "On"}),  # config
+        BaseConv("action", "sensor"),
+        MapConv("action", mi="6.e.1.p.2", map={1: BUTTON_1_SINGLE, 2: BUTTON_2_SINGLE, 3: BUTTON_3_SINGLE, 4: BUTTON_4_SINGLE, 5: "button_5_single", 6: "button_6_single"}),
+    ],
 }, {
     "default": "mesh",  # default Mesh device
     "spec": [
